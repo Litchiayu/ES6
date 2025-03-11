@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+
+  <!-- 场景	ES5（使用 apply）	ES6（使用 ...）
+  展开数组为参数	sum.apply(null, numbers)	sum(...numbers)
+  保留 this 绑定	func.apply(thisArg, args)	func.call(thisArg, ...args)
+  混合其他参数	需要合并数组（如 [x, ...args]）	直接混合（如 func(x, ...args)）
+  可读性	低（需理解 apply 的机制）	高（直观展开） -->
+
+
+
+<!-- const args = ["Alice", "Hello"]; -->
+// ES5
+<!-- greet.apply(null, args); // "Hello, Alice!" -->
+
+// ES6
+<!-- greet(...args); // "Hello, Alice!" -->
+
+
+<!-- const context = { value: 100 };
+const args = [1, 2, 3];
+
+// ES5
+func.apply(context, args);
+
+// ES6
+func.call(context, ...args); // 注意使用 call 而不是 apply -->
+
+
+  <script>
+    // 原始函数
+function sendMessage(message) {
+  console.log(`发送消息: ${message}`);
+}
+
+// 装饰器：添加日志功能
+function withLogging(func) {
+  return function(...args) {
+    console.log(`[日志] 函数被调用，参数: ${args}`);
+    const result = func(args); // 转发调用到原函数
+    console.log(`[日志] 函数执行完毕`);
+    return result;
+  };
+}
+
+// 使用装饰器
+const decoratedSend = withLogging(sendMessage);
+decoratedSend("Hello!");
+
+// 输出：
+// [日志] 函数被调用，参数: Hello!
+// 发送消息: Hello!
+// [日志] 函数执行完毕
+  </script>
+</body>
+</html>
